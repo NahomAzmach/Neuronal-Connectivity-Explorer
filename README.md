@@ -1,6 +1,6 @@
 # 🧠 Neuronal Connectivity Explorer
 
-This is a lightweight, AI-enhanced web application for visualizing mouse brain connectivity using data from the [Allen Mouse Brain Connectivity Atlas](https://connectivity.brain-map.org/). It allows users to explore neuronal projections from a given brain region and receive concise, AI-generated insights on neural function and circuitry.
+This is a lightweight, AI-enhanced web application for visualizing mouse brain connectivity using data from the [Allen Mouse Brain Connectivity Atlas](https://connectivity.brain-map.org). It allows users to explore neuronal projections from a given brain region and receive concise, AI-generated insights on neural function and circuitry.
 
 Built using Python, Flask, Plotly, and OpenAI’s GPT API, this project reflects my ongoing interest in building accessible scientific tools that translate large biological datasets into usable knowledge.
 

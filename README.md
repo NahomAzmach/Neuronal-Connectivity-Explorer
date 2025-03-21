@@ -93,7 +93,7 @@ http://127.0.0.1:5000
 ```
 
 ## 📁 Folder Structure
-
+```bash
 neuronal-connectivity-explorer/
 ├── app/
 │   └── neuronal_connectivity.py
@@ -106,6 +106,7 @@ neuronal-connectivity-explorer/
 ├── README.md
 ├── Dockerfile
 ├── .gitignore
+```
 
 ## 🧪 Example Use Case
 

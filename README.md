@@ -49,9 +49,9 @@ From visualizing protein behavior with ROSETTA to scraping real-time rental data
 
 | Layer       | Technology                     |
 |-------------|--------------------------------|
-| Backend     | Python, Flask, SQLite          |
+| Backend     | Python, Flask, SQLite (Cache)  |
 | Frontend    | HTML, Bootstrap, Plotly.js     |
-| AI/Insight  | OpenAI GPT-4 / GPT-3.5-Turbo   |
+| AI/Insight  | GPT-3.5-Turbo                  |
 | Data Source | Allen Mouse Brain Atlas, AllenSDK |
 
 ---

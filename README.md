@@ -137,3 +137,9 @@ A Node.js/React-based platform that consolidates listings from two major rental 
 
 ## 👤 About Me
 I’m a computer science upcoming graduate with strong interests in scientific computing, data accessibility, and front-end/backend tool development. I love projects that turn big, messy datasets into interactive, elegant systems — especially when they support real-world exploration, equity, and discovery. I have also recieved a minor in Biology and Chemistry.
+
+## 📚 Resources
+
+- [Allen Brain Map](https://portal.brain-map.org/)
+- [Allen SDK Documentation](https://allensdk.readthedocs.io/)
+- [Mouse Brain Connectivity Atlas](https://connectivity.brain-map.org/)

@@ -1,4 +1,4 @@
-# 🧠 Neuronal Connectivity Explorer
+# Neuronal Connectivity Explorer
 
 This is a lightweight, AI-enhanced web application for visualizing mouse brain connectivity using data from the [Allen Mouse Brain Connectivity Atlas](https://connectivity.brain-map.org). It allows users to explore neuronal projections from a given brain region and receive concise, AI-generated insights on neural function and circuitry.
 
@@ -10,7 +10,7 @@ Built using Python, Flask, Plotly, and OpenAI’s GPT API, this project reflects
 
 ---
 
-## 🔍 Why This Project?
+## Why This Project?
 
 Across multiple academic and personal projects, I’ve found immense value in making complex datasets — from infrared spectroscopy and protein structures to rental markets — both **explorable** and **understandable**.
 
@@ -18,7 +18,7 @@ This project continues that theme by transforming connectivity data into interac
 
 ---
 
-## ✨ Features
+## Features
 
 - **Interactive Visualizations**  
   Bar charts, heatmaps, and network graphs make it easy to compare projection strengths between brain regions.
@@ -37,7 +37,7 @@ This project continues that theme by transforming connectivity data into interac
 
 ---
 
-## 🧠 Project Philosophy
+## Project Philosophy
 
 This project embodies a theme common to much of my work: **taking complex scientific or real-world data and turning it into systems people can interact with**.
 
@@ -45,7 +45,7 @@ From visualizing protein behavior with ROSETTA to scraping real-time rental data
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer       | Technology                     |
 |-------------|--------------------------------|
@@ -56,7 +56,7 @@ From visualizing protein behavior with ROSETTA to scraping real-time rental data
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone the Repo
 
@@ -92,7 +92,7 @@ Then visit:
 http://127.0.0.1:5000
 ```
 
-## 📁 Folder Structure
+## Folder Structure
 ```bash
 neuronal-connectivity-explorer/
 ├── app/
@@ -108,7 +108,7 @@ neuronal-connectivity-explorer/
 ├── .gitignore
 ```
 
-## 🧪 Example Use Case
+## Example Use Case
 
 **A user inputs the ID of a brain structure (e.g., hippocampus) and receives:**
 
@@ -123,7 +123,7 @@ neuronal-connectivity-explorer/
 "What kind of circuits does this pattern suggest?"
 
 
-## 📚 Related Projects
+## Related Projects
 **Rental Property Aggregator (AWS-Backed, Full Stack)**
 Identified a local housing pain point and built a scalable solution:
 A Node.js/React-based platform that consolidates listings from two major rental websites into a single, user-friendly interface.
@@ -136,10 +136,10 @@ A Node.js/React-based platform that consolidates listings from two major rental 
 - Automatically updates listing data on schedule using headless scraping tools and AWS EventBridge
 - This project reflects my passion for turning fragmented, big datasets into tools that support transparency, accessibility, and better decision-making.
 
-## 👤 About Me
+## About Me
 I’m a computer science upcoming graduate with strong interests in scientific computing, data accessibility, and front-end/backend tool development. I love projects that turn big, messy datasets into interactive, elegant systems — especially when they support real-world exploration, equity, and discovery. I have also recieved a minor in Biology and Chemistry.
 
-## 📚 Resources
+## Resources
 
 - [Allen Brain Map](https://portal.brain-map.org/)
 - [Allen SDK Documentation](https://allensdk.readthedocs.io/)

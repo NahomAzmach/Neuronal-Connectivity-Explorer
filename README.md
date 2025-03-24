@@ -79,6 +79,7 @@ From visualizing protein behavior with ROSETTA to scraping real-time rental data
 git clone https://github.com/NahomAzmach/neuronal-connectivity-explorer.git
 cd neuronal-connectivity-explorer
 ```
+#### Option A: Using PIP
 ### 2. Create and Activate a Virtual Environment
 
 ```bash
@@ -90,16 +91,28 @@ source venv/bin/activate  # or venv\Scripts\activate on Windows
 ```bash
 pip install -r requirements.txt
 ```
+#### Option B: Using Conda
+```bash
+# Create and activate a conda environment
+conda create -n neuro_connectivity python=3.9
+conda activate neuro_connectivity
 
+# Install core packages through conda
+conda install -c conda-forge flask pandas numpy plotly
+
+# Install remaining packages through pip
+pip install markupsafe openai==0.28.1 allensdk
+```
 ### 4. Set Your API Key 
 
 ```bash
-export OPENAI_API_KEY="YourOpenAIKey"
+export OPENAI_API_KEY="YourOpenAIKey" #on mac or Linux
+set OPENAI_API_KEY="YourOpenAIKey"  # On Windows
 ```
 
 ### 5. Run the app
 ```bash
-python app/neuronal_connectivity.py
+python neuronal_connectivity.py
 ```
 
 Then visit: 
@@ -115,6 +128,7 @@ neuronal-connectivity-explorer/
 ├── templates/
 │   └── index.html
 ├── static/
+|   └── structures.csv (List of all the brain structures)
 │   └── images/
 │       └── mouseBrainPic.png
 ├── requirements.txt

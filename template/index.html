@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuronal Connectivity Explorer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header {
+            background: linear-gradient(135deg, #343a40 0%, #121212 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .card {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+            border: none;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+        }
+        .structure-info {
+            background-color: #e7f5ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+        .error-message {
+            color: #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #dc3545;
+            background-color: #f8d7da;
+            border-radius: 8px;
+        }
+        .help-section {
+            background-color: #f1f3f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 4px solid #6c757d;
+        }
+        .nav-pills .nav-link {
+            color: #495057;
+            font-weight: 500;
+        }
+        .nav-pills .nav-link.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .icon-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .vis-explanation {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        .badge {
+            font-size: 0.85rem;
+            padding: 8px 12px;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 500;
+        }
+        .brain-icon {
+            color: #007bff;
+            margin-right: 8px;
+        }
+        .insights-text {
+            line-height: 1.6;
+        }
+        .ai-badge {
+            background-color: #6f42c1;
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .ai-feature {
+            border-left: 4px solid #6f42c1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header text-center">
+            <h1><i class="bi bi-activity brain-icon"></i>Neuronal Connectivity Explorer</h1>
+            <p class="lead">Interactive visualization of neuronal pathways in the mouse brain</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="icon-title"><i class="bi bi-search"></i> Search Connectivity</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label for="structure_id" class="form-label">Enter Brain Structure ID:</label>
+                                <input type="text" class="form-control" name="structure_id" id="structure_id" required>
+                                <div class="form-text">Example IDs: 385 (Visual), 549 (Thalamus), 1089 (Hippocampus)</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-graph-up"></i> Analyze Connectivity
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Brain Structure Directory Dropdown -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="icon-title"><i class="bi bi-list-nested"></i> Brain Structure Directory</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="structureDropdown" class="form-label">Select a brain structure:</label>
+                            <select class="form-select" id="structureDropdown">
+                                <option value="" selected disabled>Loading structures...</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-outline-primary w-100" id="useSelectedStructure">
+                            <i class="bi bi-check-circle"></i> Use Selected Structure
+                        </button>
+                        
+                        <div class="mt-3">
+                            <input type="text" class="form-control" id="structureFilter" placeholder="Filter structures...">
+                            <small class="text-muted">Type to filter the dropdown options</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mouse Anatomy Reference -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="icon-title"><i class="bi bi-boxes"></i> Brain Anatomy</h5>
+                    </div>
+                    <div class="card-body text-center p-0">  <!-- Remove padding with p-0 -->
+                        <img src="{{ url_for('static', filename='images/mouseBrainPic.png') }}" 
+                             alt="Mouse Brain Anatomy" 
+                             class="img-fluid mb-2" 
+                             style="width: 100%;">  <!-- Force full width -->
+                        <p class="small text-muted my-2">Sagittal view of a mouse brain showing major structures</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- results section -->
+            <div class="col-md-8">
+                {% if error_message %}
+                    <div class="error-message">
+                        <strong><i class="bi bi-exclamation-triangle-fill"></i> Error:</strong> {{ error_message }}
+                    </div>
+                {% endif %}
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="icon-title"><i class="bi bi-bar-chart-line"></i> Connectivity Results</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if bar_html %}
+                            <div class="structure-info">
+                                <strong><i class="bi bi-info-circle"></i> Analysis complete:</strong> 
+                                Showing projection strengths from {{ source_name }} to other brain regions.
+                            </div>
+                            
+                            <!-- the tabs for different visualizations -->
+                            <ul class="nav nav-pills mb-3" id="visualization-tabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="bar-tab" data-bs-toggle="pill" 
+                                            data-bs-target="#bar-content" type="button" role="tab">
+                                        <i class="bi bi-bar-chart"></i> Bar Chart
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="heatmap-tab" data-bs-toggle="pill" 
+                                            data-bs-target="#heatmap-content" type="button" role="tab">
+                                        <i class="bi bi-grid-3x3"></i> Heatmap
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="network-tab" data-bs-toggle="pill" 
+                                            data-bs-target="#network-content" type="button" role="tab">
+                                        <i class="bi bi-diagram-2"></i> Network
+                                    </button>
+                                </li>
+                            </ul>
+                            
+                            <!-- Tab content -->
+                            <div class="tab-content" id="visualization-content">
+                                <div class="tab-pane fade show active" id="bar-content" role="tabpanel">
+                                    {{ bar_html|safe }}
+                                    <div class="vis-explanation">
+                                        <strong>Bar Chart:</strong> Shows the projection strength from {{ source_name }} 
+                                        to various target regions. Higher bars indicate stronger connections.
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="heatmap-content" role="tabpanel">
+                                    {{ heatmap_html|safe }}
+                                    <div class="vis-explanation">
+                                        <strong>Heatmap:</strong> Visualizes the connectivity strength using color intensity. 
+                                        Darker red indicates stronger projections from {{ source_name }} to the target region.
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="network-content" role="tabpanel">
+                                    {{ network_html|safe }}
+                                    <div class="vis-explanation">
+                                        <strong>Network Graph:</strong> Displays a network representation of brain connectivity. 
+                                        The red node is {{ source_name }}, blue nodes are target regions, and thicker lines 
+                                        indicate stronger connections.
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="text-center p-5">
+                                <i class="bi bi-braces-asterisk" style="font-size: 3rem; color: #dee2e6;"></i>
+                                <p class="mt-3">Enter a structure ID to visualize its neuronal connectivity patterns</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- AI Insights Card -->
+                {% if ai_insights_html %}
+                    {{ ai_insights_html|safe }}
+                {% endif %}
+
+                <!-- AI Query Interface Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="icon-title mb-0"><i class="bi bi-chat-dots"></i> Ask about this brain region</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group mb-3">
+                            <input type="text" id="brain-query-input" class="form-control" 
+                                placeholder="Ask a question about this brain region and its connections..." 
+                                {% if not source_name %}disabled{% endif %}>
+                            <button class="btn btn-primary" type="button" id="query-submit-btn" 
+                                    {% if not source_name %}disabled{% endif %}>
+                                <i class="bi bi-send"></i> Ask
+                            </button>
+                        </div>
+                        
+                        <div id="query-result-area" class="mt-3" style="display: none;">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="me-2"><i class="bi bi-question-circle text-primary"></i></div>
+                                        <div><strong id="query-display"></strong></div>
+                                    </div>
+                                    <div class="d-flex mt-3">
+                                        <div class="me-2"><i class="bi bi-robot text-secondary"></i></div>
+                                        <div id="query-answer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="query-loading" class="text-center py-4" style="display: none;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Processing your question...</p>
+                        </div>
+                        
+                        <div id="query-error" class="alert alert-danger mt-3" style="display: none;">
+                            <i class="bi bi-exclamation-triangle"></i> 
+                            <span id="error-message">Error processing your query.</span>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <p class="text-muted small mb-0">
+                                <i class="bi bi-info-circle"></i> Example questions:
+                                "What functions is this region involved in?",
+                                "Why does it connect strongly to the thalamus?",
+                                "What cell types are common in this region?"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help Section -->
+                <div class="help-section">
+                    <h5 class="icon-title"><i class="bi bi-question-circle"></i> Understanding the Data</h5>
+                    <p>This application visualizes neuronal connectivity data from the Allen Mouse Brain Connectivity Atlas. The data shows how strongly different brain regions are connected to each other.</p>
+                    
+                    <p><strong>Interpreting the results:</strong></p>
+                    <ul>
+                        <li><strong>Projection Strength:</strong> Measures how strongly neurons from the source region project to other regions. Higher values indicate stronger connections.</li>
+                        <li><strong>Source Region:</strong> The brain structure you selected with the ID number.</li>
+                        <li><strong>Target Regions:</strong> Other brain areas that receive connections from your selected source region.</li>
+                    </ul>
+                    <div class="card mt-3 mb-3">
+                        <div class="card-header bg-info bg-opacity-25">
+                            <h6 class="mb-0"><i class="bi bi-lightbulb"></i> Example Interpretation</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li>If you enter <strong>Structure ID 385 (Primary Visual Area)</strong>, and the <strong>thalamus</strong> has a high <strong>projection strength</strong>, this means: <strong>"The Primary Visual Area sends strong connections to the thalamus."</strong></li>
+                                <li class="mt-2">If the <strong>Cerebellum</strong> has a lower projection strength, it means: <strong>"The Primary Visual Area has weak or no direct connections to the Cerebellum."</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p><strong>Scientific context:</strong> Understanding these connections helps neuroscientists map information flow in the brain and can inform research on neural circuits, behavior, and brain disorders.</p>
+                    
+                    <div class="card mt-3">
+                        <div class="card-header bg-primary text-white">
+                            <h6 class="mb-0"><i class="bi bi-robot"></i> About AI Features</h6>
+                        </div>
+                        <div class="card-body">
+                            <p>This application uses AI to enhance your exploration of brain connectivity data:</p>
+                            <ol>
+                                <li><strong>AI Insights:</strong> Automatically analyzes connectivity patterns to suggest functional implications and circuit involvement.</li>
+                                <li><strong>Interactive Queries:</strong> Ask natural language questions about the brain region and its connections.</li>
+                                <li><strong>Enhanced Tooltips:</strong> Hover over brain regions to see AI-generated explanations of their function.</li>
+                            </ol>
+                            <p class="small text-muted mb-0">These AI features demonstrate the integration of natural language processing with scientific data visualization to enhance neuroscience research tools.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 text-muted">
+        <p>Data source: Allen Institute for Brain Science</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Query UX Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const queryInput = document.getElementById('brain-query-input');
+        const submitBtn = document.getElementById('query-submit-btn');
+        const resultArea = document.getElementById('query-result-area');
+        const queryDisplay = document.getElementById('query-display');
+        const queryAnswer = document.getElementById('query-answer');
+        const loadingIndicator = document.getElementById('query-loading');
+        const errorDisplay = document.getElementById('query-error');
+        const errorMessage = document.getElementById('error-message');
+        
+        // Only if we have a source_name
+        {% if source_name %}
+            queryInput.disabled = false;
+            submitBtn.disabled = false;
+        {% endif %}
+        
+        submitBtn.addEventListener('click', function() {
+            handleQuery();
+        });
+        
+        queryInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleQuery();
+            }
+        });
+        
+        function handleQuery() {
+            const query = queryInput.value.trim();
+            if (!query) return;
+            
+            // Show loading, hide results and errors
+            loadingIndicator.style.display = 'block';
+            resultArea.style.display = 'none';
+            errorDisplay.style.display = 'none';
+            
+            // display the query
+            queryDisplay.textContent = query;
+            
+            fetch('/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: query,
+                    source_name: '{{ source_name }}',
+                    structure_id: '{{ structure_id }}'
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingIndicator.style.display = 'none';
+                
+                if (data.status === 'success') {
+                    queryAnswer.innerHTML = data.answer.replace(/\n/g, '<br>');
+                    resultArea.style.display = 'block';
+                } else {
+                    errorMessage.textContent = data.message;
+                    errorDisplay.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                loadingIndicator.style.display = 'none';
+                errorMessage.textContent = 'Error connecting to the server. Please try again.';
+                errorDisplay.style.display = 'block';
+                console.error('Error:', error);
+            });
+        }
+    });
+
+    // Brain Structure Dropdown Script
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdown = document.getElementById('structureDropdown');
+        const filterInput = document.getElementById('structureFilter');
+        const useButton = document.getElementById('useSelectedStructure');
+        const structureIdInput = document.getElementById('structure_id');
+        
+        // get all brain structures
+        fetch('/structures')
+            .then(response => response.json())
+            .then(data => {
+                // sorting alphabetically
+                data.sort((a, b) => a.name.localeCompare(b.name));
+                
+                // Clear loading option
+                dropdown.innerHTML = '<option value="" selected disabled>Select a brain structure</option>';
+                
+                // Add all structures to dropdown
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = `${item.name} (${item.id})`;
+                    dropdown.appendChild(option);
+                });
+                
+                // Store all options for filtering
+                const allOptions = Array.from(dropdown.options).slice(1); // Skip the first "Select" option
+                
+                // handle filtering
+                filterInput.addEventListener('input', function() {
+                    const filterText = filterInput.value.toLowerCase();
+                    
+                    // must start with fresh dropdown with just the placeholder
+                    dropdown.innerHTML = '<option value="" selected disabled>Select a brain structure</option>';
+                    
+                    // filter and add matching options
+                    allOptions.forEach(option => {
+                        if (option.textContent.toLowerCase().includes(filterText)) {
+                            dropdown.appendChild(option.cloneNode(true));
+                        }
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('Error loading structures:', error);
+                dropdown.innerHTML = '<option value="" selected disabled>Error loading structures</option>';
+            });
+        
+        // the "Use Selected Structure" button
+        useButton.addEventListener('click', function() {
+            if (dropdown.value) {
+                structureIdInput.value = dropdown.value;
+                structureIdInput.form.submit();
+            }
+        });
+    });
+    </script>
+</body>
+</html>

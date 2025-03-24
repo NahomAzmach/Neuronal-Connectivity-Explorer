@@ -5,7 +5,7 @@ This is a lightweight, AI-enhanced web application for visualizing mouse brain c
 Built using Python, Flask, Plotly, and OpenAI’s GPT API, this project reflects my ongoing interest in building accessible scientific tools that translate large biological datasets into usable knowledge.
 
 <div align="center">
-  <img src="static/images/mouseBrainPic.png" alt="Mouse Brain Overview" width="70%">
+  <img src="static/images/BarGraph.png" alt="Mouse Brain Overview" width="70%">
 </div>
 
 ---

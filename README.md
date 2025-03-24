@@ -132,6 +132,10 @@ neuronal-connectivity-explorer/
 |   └── structures.csv (List of all the brain structures)
 │   └── images/
 │       └── mouseBrainPic.png
+|       └──AI1.png
+|       └──AI3.png
+|       └──heatMap.png
+|       └──barGraph.png
 ├── requirements.txt
 ├── README.md
 ├── .gitignore

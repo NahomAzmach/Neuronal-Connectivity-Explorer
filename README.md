@@ -1,4 +1,7 @@
 # Neuronal Connectivity Explorer
+## 📺 Watch a Live Demo Here!
+
+[![Watch the demo](https://img.youtube.com/vi/GDvpaCxxzcs/maxresdefault.jpg)](https://www.youtube.com/watch?v=GDvpaCxxzcs)
 
 This is a lightweight, AI-enhanced web application for visualizing mouse brain connectivity using data from the [Allen Mouse Brain Connectivity Atlas](https://connectivity.brain-map.org). It allows users to explore neuronal projections from a given brain region and receive concise, AI-generated insights on neural function and circuitry.
 
@@ -17,8 +20,6 @@ Across multiple academic and personal projects, I’ve found immense value in ma
 This project continues that theme by transforming connectivity data into interactive visualizations and interpretable summaries. It reflects my belief that tools should not just present information — they should **guide insight**, **improve accessibility**, and **support exploration** across a range of users.
 
 ---
-
-## Features
 
 ## Features
 

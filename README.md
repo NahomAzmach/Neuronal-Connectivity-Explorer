@@ -134,7 +134,6 @@ neuronal-connectivity-explorer/
 │       └── mouseBrainPic.png
 ├── requirements.txt
 ├── README.md
-├── Dockerfile
 ├── .gitignore
 ```
 

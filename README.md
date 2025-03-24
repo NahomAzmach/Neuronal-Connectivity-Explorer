@@ -20,14 +20,29 @@ This project continues that theme by transforming connectivity data into interac
 
 ## Features
 
+## Features
+
 - **Interactive Visualizations**  
   Bar charts, heatmaps, and network graphs make it easy to compare projection strengths between brain regions.
+  
+  <div align="center">
+    <img src="static/images/heatMap.png" alt="Heatmap Visualization" width="45%">
+    <img src="static/images/networkMap.png" alt="Network Graph" width="45%">
+  </div>
 
 - **AI-Generated Tooltips**  
   Uses OpenAI GPT to generate concise 1–2 sentence descriptions of mouse brain regions, cached locally via SQLite.
+  
+  <div align="center">
+    <img src="static/images/AI1.png" alt="AI Tooltips" width="70%">
+  </div>
 
 - **Natural Language Query Interface**  
   Users can type questions like _"Why does this area project to the thalamus?"_ and receive context-aware answers.
+  
+  <div align="center">
+    <img src="static/images/AI3.png" alt="AI Query Interface" width="70%">
+  </div>
 
 - **Modular, Reusable Backend Components**  
   Code is structured for easy reuse in other biological or anatomical datasets.
